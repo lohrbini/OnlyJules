@@ -292,7 +292,7 @@ def overview():
 if __name__ == '__main__':
     # Ensure the database schema is initialized
     with app.app_context():
-        if not os.path.exists('app.db'):
+        if not os.path.exists(str(os.environ.get('DB_NAME', 'app.db'))):
             database.init_db()
 
     # Get the port from environment variable or use default 5000

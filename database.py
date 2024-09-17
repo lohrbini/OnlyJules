@@ -1,7 +1,8 @@
 import sqlite3
 from flask import g
+import os
 
-DATABASE = 'database/app.db'
+DATABASE = str(os.environ.get('DB_NAME', 'app.db'))
 
 def get_db():
     if 'db' not in g:
