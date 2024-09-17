@@ -1,6 +1,6 @@
-# OnlyJules
+# flaskStreamR
 
-**OnlyJules** is a web application designed for managing and viewing RTSP camera streams. OnlyJules provides an easy-to-use interface for monitoring multiple camera feeds and managing camera settings. 
+**flaskStreamr** is a web application designed for managing and viewing RTSP camera streams. It provides an easy-to-use interface for monitoring multiple camera feeds and managing camera settings. 
 
 ## Features
 
@@ -12,20 +12,20 @@
 
 ## Installation
 
-To set up OnlyJules on your local machine, follow these steps:
+To set up flaskStreamr on your local machine, follow these steps:
 
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/onlyjules.git
-   cd onlyjules
+   https://github.com/lohrbini/flaskStreamr.git
+   cd flaskStreamr
 
 2. **Run the Application**
 
 To run the application in docker use this command
 
 ```
-docker run -v ./database:/database --network host -p 5000:5000 -d harbor.skl.works/library/onlyjules:v0.0.1 
+docker run -v ./database:/database --network host -p 5000:5000 -d harbor.skl.works/library/flaskstreamr:v0.0.1 
 ```
 
 Otherwise install the pip packages and run the Application without docker
