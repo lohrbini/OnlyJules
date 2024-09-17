@@ -28,10 +28,18 @@ def get_user(username):
     user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
     return user
 
-def add_user(username, password):
+def add_user(username, password, role='user'):
     db = database.get_db()
-    db.execute('INSERT INTO users (username, password) VALUES (?, ?)',
-               (username, hash_password(password)))
+    
+    # Check if any users exist
+    user_count = db.execute('SELECT COUNT(*) FROM users').fetchone()[0]
+    
+    # Automatically set the first user as admin
+    if user_count == 0:
+        role = 'admin'
+    
+    db.execute('INSERT INTO users (username, password, role) VALUES (?, ?, ?)',
+               (username, hash_password(password), role))
     db.commit()
 
 def update_password(username, new_password):
@@ -279,7 +287,7 @@ def user_management():
         return redirect(url_for('login'))
 
     db = database.get_db()
-    users = db.execute('SELECT username, last_login FROM users').fetchall()
+    users = db.execute('SELECT * FROM users').fetchall()
     return render_template('user_management.html', users=users)
 
 @app.route('/overview')
