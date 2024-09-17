@@ -292,7 +292,7 @@ def overview():
 if __name__ == '__main__':
     # Ensure the database schema is initialized
     with app.app_context():
-        if not os.path.exists('app.db'):
+        if not os.path.exists('/database/app.db'):
             database.init_db()
     
     app.run(debug=True)
