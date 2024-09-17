@@ -1,0 +1,183 @@
+/* styles.css */
+
+/* Base Colors */
+:root {
+    --background-color: #121212; /* Very dark background */
+    --container-background: #1e1e1e; /* Slightly lighter than the background */
+    --font-color: #ffffff; /* White text */
+    --input-background: #333333; /* Dark gray for input fields */
+    --input-text-color: #ffffff; /* White text in input fields */
+    --label-color: #b0bec5; /* Light gray for labels */
+    --button-background: #555555; /* Gray for buttons */
+    --button-text-color: #ffffff; /* White text on buttons */
+    --button-hover-background: #424242; /* Darker gray on button hover */
+    --error-color: #ff5252; /* Bright red for error messages */
+    --dropdown-background-color: #3a3a3a;
+    --dropdown-border-color: #555555;
+    --dropdown-selected-border-color: #ffffff;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--font-color);
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Light Mode Variables */
+.light-mode {
+    --background-color: #f5f5f5;
+    --header-background-color: #ffffff;
+    --card-background-color: #ffffff;
+    --font-color: #333333;
+    --icon-color: #000000;
+    --modal-background-color: #ffffff;
+    --modal-font-color: #333333;
+}
+
+header {
+    background-color: var(--header-background-color);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+
+.theme-toggle-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--icon-color);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info .username {
+    margin-right: 20px;
+    font-size: 14px;
+    color: var(--font-color);
+}
+
+.hamburger-icon {
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--icon-color);
+}
+
+.dropdown-content {
+    min-width: 150px;
+    background-color: var(--dropdown-background-color);
+    border: 1px solid var(--dropdown-border-color);
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: var(--font-color) !important;
+}
+
+.dropdown-content li:hover, .dropdown-content li.active {
+    background-color: var(--card-background-color);
+}
+
+.dropdown-content li.active {
+    border: 2px solid var(--dropdown-selected-border-color);
+    border-radius: 4px;
+    background-color: var(--card-background-color);
+}
+
+.container {
+    flex: 1;
+    padding: 20px;
+}
+
+.card {
+    background-color: var(--card-background-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.camera-preview {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.card-content {
+    color: var(--font-color);
+}
+
+.page-footer {
+    background-color: var(--header-background-color);
+    padding: 10px;
+}
+
+.page-footer p {
+    margin: 0;
+    color: var(--font-color);
+}
+
+/* Modal Styling */
+.modal {
+    background-color: var(--modal-background-color);
+    color: var(--modal-font-color);
+    border-radius: 8px;
+}
+
+.modal-content {
+    padding: 20px;
+    background-color: var(--modal-background-color);
+    color: var(--modal-font-color);
+}
+
+.modal-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modal-content th, .modal-content td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+}
+
+.modal-content th {
+    background-color: #333;
+}
+
+.modal-content tr:nth-child(even) {
+    background-color: #444;
+}
+
+.modal-content tr:hover {
+    background-color: #555;
+}
+
+.modal-footer {
+    padding: 10px;
+    background-color: var(--modal-background-color);
+}
+
+.modal-footer .modal-close {
+    color: var(--font-color);
+}
+
+/* Input Fields in Modals */
+.modal-content .input-field input {
+    color: #fff; /* Font color for input text */
+    background-color: #333; /* Background color for input fields */
+}
+
+.modal-content .input-field input::placeholder {
+    color: #888; /* Placeholder text color */
+}
+
+.modal-content .input-field label {
+    color: #fff; /* Label color */
+}

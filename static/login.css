@@ -1,0 +1,68 @@
+/* styles.css */
+:root {
+    --background-color: #121212; /* Very dark background */
+    --container-background: #1e1e1e; /* Slightly lighter than the background */
+    --font-color: #ffffff; /* White text */
+    --input-background: #333333; /* Dark gray for input fields */
+    --input-text-color: #ffffff; /* White text in input fields */
+    --label-color: #b0bec5; /* Light gray for labels */
+    --button-background: #555555; /* Gray for buttons */
+    --button-text-color: #ffffff; /* White text on buttons */
+    --button-hover-background: #424242; /* Darker gray on button hover */
+    --error-color: #ff5252; /* Bright red for error messages */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--font-color);
+    font-family: 'Roboto', sans-serif;
+}
+
+.login-container {
+    background: var(--container-background);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 350px;
+    width: 100%;
+    position: relative;
+}
+
+.login-container h4 {
+    margin: 0 0 20px;
+    font-size: 22px;
+    color: var(--font-color);
+}
+
+.error-message {
+    color: var(--error-color);
+    margin-bottom: 20px;
+}
+
+.input-field input {
+    font-size: 16px;
+    color: var(--input-text-color);
+    background: var(--input-background);
+    border: none;
+    border-radius: 4px;
+}
+
+.input-field label {
+    font-size: 14px;
+    color: var(--label-color);
+}
+
+.btn {
+    font-size: 16px;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+}
+
+.btn:hover {
+    background-color: var(--button-hover-background);
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Stream Overview</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <span class="theme-toggle-btn" id="theme-toggle-btn">
+            <i class="material-icons">brightness_6</i>
+        </span>
+        <div class="user-info">
+            <span class="username">{{ session['username'] }}</span>
+            <button class="dropdown-trigger" data-target="user-dropdown">
+                <i class="material-icons hamburger-icon">menu</i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row">
+            {% for camera in cameras %}
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image">
+                        <img id="camera-preview-{{ loop.index }}" class="camera-preview" 
+                             src="{{ url_for('snapshot', camera_id=loop.index - 1) }}" 
+                             alt="Camera Preview"
+                             onclick="window.open('{{ url_for('video_feed', camera_id=loop.index - 1) }}', '_blank')">
+                        <span class="camera-location">{{ camera['location'] if camera['location'] else 'Unknown' }}</span>
+                        <a href="#camera-settings-modal-{{ loop.index }}" class="settings-icon modal-trigger">
+                            <i class="material-icons">settings</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <div class="center-align">
+            <p>&copy; 2024 OnlyJules</p>
+        </div>
+    </footer>
+
+    <!-- Dropdown menu for user and camera management -->
+    <ul id="user-dropdown" class="dropdown-content">
+        <li><a href="{{ url_for('index') }}">Overview</a></li>
+        <li><a href="#add-camera-modal" class="modal-trigger">Add Camera</a></li>
+        <li><a href="#change-password-modal" class="modal-trigger">Change Password</a></li>
+        <li><a href="#user-management-modal" class="modal-trigger">User Management</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+
+    <!-- Modals for camera settings -->
+    {% for camera in cameras %}
+    <div id="camera-settings-modal-{{ loop.index }}" class="modal">
+        <div class="modal-content">
+            <h4>Camera Settings</h4>
+            <form action="{{ url_for('update_camera', camera_id=loop.index) }}" method="post">
+                <div class="input-field">
+                    <input id="camera_ip" name="camera_ip" type="text" value="{{ camera['ip'] }}" required>
+                    <label for="camera_ip">Camera IP</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_port" name="camera_port" type="number" value="{{ camera['port'] }}" required>
+                    <label for="camera_port">Port</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_path" name="camera_path" type="text" value="{{ camera['path'] }}" required>
+                    <label for="camera_path">Stream Path</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_username" name="camera_username" type="text" value="{{ camera['username'] }}">
+                    <label for="camera_username">Username (optional)</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_password" name="camera_password" type="password" value="{{ camera['password'] }}">
+                    <label for="camera_password">Password (optional)</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_location" name="camera_location" type="text" value="{{ camera['location'] }}">
+                    <label for="camera_location">Location (optional)</label>
+                </div>
+                <button class="btn waves-effect waves-light blue-grey darken-4" type="submit">Update Camera</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Modal for Adding a Camera -->
+    <div id="add-camera-modal" class="modal">
+        <div class="modal-content">
+            <h4>Add New Camera</h4>
+            <form action="{{ url_for('add_camera_route') }}" method="post">
+                <div class="input-field">
+                    <input id="camera_ip" name="camera_ip" type="text" required>
+                    <label for="camera_ip">Camera IP</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_port" name="camera_port" type="number" required>
+                    <label for="camera_port">Port</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_path" name="camera_path" type="text" required>
+                    <label for="camera_path">Stream Path</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_username" name="camera_username" type="text">
+                    <label for="camera_username">Username (optional)</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_password" name="camera_password" type="password">
+                    <label for="camera_password">Password (optional)</label>
+                </div>
+                <div class="input-field">
+                    <input id="camera_location" name="camera_location" type="text">
+                    <label for="camera_location">Location (optional)</label>
+                </div>
+                <button class="btn waves-effect waves-light blue-grey darken-4" type="submit">Add Camera</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+    <!-- Modal for Changing Password -->
+    <div id="change-password-modal" class="modal">
+        <div class="modal-content">
+            <h4>Change Password</h4>
+            <form action="{{ url_for('change_password') }}" method="post">
+                <div class="input-field">
+                    <input id="old_password" name="old_password" type="password" required>
+                    <label for="old_password">Old Password</label>
+                </div>
+                <div class="input-field">
+                    <input id="new_password" name="new_password" type="password" required>
+                    <label for="new_password">New Password</label>
+                </div>
+                <button class="btn waves-effect waves-light blue-grey darken-4" type="submit">Change Password</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+    <!-- Modal for User Management -->
+    <div id="user-management-modal" class="modal">
+        <div class="modal-content">
+            <h4>Users and Last Login</h4>
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Last Login</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user['username'] }}</td>
+                        <td>{{ user['last_login'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            M.Modal.init(document.querySelectorAll('.modal'), {});
+            M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
+
+            const body = document.body;
+            const toggleBtn = document.getElementById('theme-toggle-btn');
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme && savedTheme === 'light') {
+                body.classList.add('light-mode');
+            }
+
+            toggleBtn.addEventListener('click', () => {
+                body.classList.toggle('light-mode');
+                const theme = body.classList.contains('light-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', theme);
+            });
+        });
+    </script>
+</body>
+</html>
